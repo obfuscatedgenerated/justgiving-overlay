@@ -29,6 +29,7 @@ interface FundraiserDetails {
     }
 
     eventName: string;
+    title: string;
 
     currencySymbol: string;
 

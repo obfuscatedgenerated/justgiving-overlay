@@ -142,7 +142,7 @@ export const update_whole_ui = (fundraiser: FundraiserDetails) => {
     update_background_image(no_background ? undefined : fundraiser.image.absoluteUrl);
 
     if (!no_event_name) {
-        update_event_name(fundraiser.eventName);
+        update_event_name(fundraiser.eventName || fundraiser.title);
     } else {
         const event_name = $("#event-name") as HTMLElement;
         event_name.remove();
