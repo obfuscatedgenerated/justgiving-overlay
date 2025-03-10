@@ -1,16 +1,38 @@
+* {
+    box-sizing: border-box;
+}
+
 html, body {
     background-color: transparent;
 
     font-family: "Open Sans Variable", sans-serif;
 
-    /* using a max-width to limit the size of the overlay and give a more realistic dev preview */
-    max-width: 500px;
+    width: 100vw;
+
+    margin: 0;
+
+    text-wrap: nowrap;
+}
+
+#bg-container {
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    margin: 0;
+
+    height: fit-content;
 }
 
 main {
-    width: fit-content;
-    height: fit-content;
+    width: 100%;
+    height: 100%;
+
     margin: 0;
+    padding: 1% 2.5%;
+
+    color: #fff;
+    text-shadow: 0 0 5px rgba(0, 0, 0, 0.75);
 }
 
 #event-details {
@@ -37,4 +59,45 @@ main {
 
 #progress-text {
     text-align: center;
+}
+
+#charity-details {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    gap: 5%;
+
+    margin-top: 2%;
+}
+
+#charity-headline {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+
+    gap: 5%;
+
+    width: fit-content;
+
+    flex: 1;
+}
+
+#charity-logo {
+    width: 10%;
+    height: 10%;
+}
+
+#charity-number {
+    flex: 1;
+    text-align: right;
+}
+
+@media screen and (max-width: 500px) {
+    #charity-logo {
+        width: 20%;
+        height: 20%;
+    }
 }

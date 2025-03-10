@@ -1,3 +1,15 @@
+// config from search params
+const params = new URLSearchParams(window.location.search);
+const no_event_name = params.has("no_event_name") || false;
+const no_charity_name = params.has("no_charity_name") || false;
+const no_charity_description = params.has("no_charity_description") || false;
+const no_charity_number = params.has("no_charity_number") || false;
+const charity_details_row = params.has("charity_details_row") || false;
+const no_charity_details = params.has("no_charity_details") || false;
+const no_background = params.has("no_background") || false;
+const no_avatar = params.has("no_avatar") || false;
+
+
 // a little convenience function to give a shorter, cacheable way to get elements to reduce searching the DOM
 const elements_cache: { [selector: string]: Element | null } = {};
 const $ = (selector: string) => {
@@ -48,11 +60,32 @@ export const update_charity_details = (charity: CharityDetails) => {
     logo.src = charity.logoAbsoluteUrl;
     logo.alt = `Logo for ${charity.name}`;
 
-    name.innerText = charity.name;
-    description.innerText = charity.description;
+    if (no_charity_name) {
+        if (name) {
+            name.remove();
+        }
+    } else {
+        name.innerText = charity.name;
+    }
 
-    if (charity.registrationNumber) {
+    if (no_charity_description) {
+        if (description) {
+            description.remove();
+        }
+    } else {
+        description.innerText = charity.description;
+    }
+
+    if (!no_charity_number && charity.registrationNumber) {
         number.innerText = `Registered charity number: ${charity.registrationNumber}`;
+    } else {
+        number.remove();
+    }
+
+    if (charity_details_row) {
+        const details = $("#charity-details") as HTMLElement;
+        details.style.flexDirection = "row";
+        details.style.justifyContent = "space-between";
     }
 }
 
@@ -73,22 +106,45 @@ export const update_progress = (raised: number, goal: number) => {
     percent_text.innerText = `${percentage.toFixed(1)}`;
 }
 
-export const update_background_image = (url: string) => {
-    const main = $("main") as HTMLDivElement;
-    main.style.backgroundImage = `url(${url})`;
+export const update_background_image = (url?: string) => {
+    const bg = $("#bg-container") as HTMLElement;
+    const main = $("main") as HTMLElement;
+
+    if (!url) {
+        bg.style.backgroundImage = "none";
+        main.style.backdropFilter = "";
+        return;
+    }
+
+    bg.style.backgroundImage = `url(${url})`;
+    main.style.backdropFilter = "blur(5px) brightness(0.7)";
 }
 
 
 export const update_whole_ui = (fundraiser: FundraiserDetails) => {
     set_currency_symbol(fundraiser.currencySymbol);
 
-    update_owner_avatar(fundraiser.owner, fundraiser.ownerProfileImageUrls.Size150x150Face);
-    update_background_image(fundraiser.image.absoluteUrl);
+    if (!no_avatar) {
+        update_owner_avatar(fundraiser.owner, fundraiser.ownerProfileImageUrls.Size150x150Face);
+    } else {
+        const avatar = $("#owner-avatar") as HTMLElement;
+        avatar.remove();
+    }
 
-    update_event_name(fundraiser.eventName);
+    update_background_image(no_background ? undefined : fundraiser.image.absoluteUrl);
 
-    if (fundraiser.charity) {
+    if (!no_event_name) {
+        update_event_name(fundraiser.eventName);
+    } else {
+        const event_name = $("#event-name") as HTMLElement;
+        event_name.remove();
+    }
+
+    if (!no_charity_details && fundraiser.charity) {
         update_charity_details(fundraiser.charity);
+    } else {
+        const charity = $("#charity-details") as HTMLElement;
+        charity.remove();
     }
 
     update_progress(fundraiser.grandTotalRaisedExcludingGiftAid, fundraiser.fundraisingTarget);
