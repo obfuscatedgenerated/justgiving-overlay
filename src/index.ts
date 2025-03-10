@@ -14,6 +14,7 @@ const main = async () => {
 
     if (!app_id || !fundraiser_slug) {
         document.body.innerText = `Missing url parameters: ${app_id ? "" : "app_id"} ${fundraiser_slug ? "" : "fundraiser_slug"}`;
+        return;
     }
 
     set_app_id(app_id!);
