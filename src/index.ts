@@ -7,6 +7,12 @@ const raised_text = document.querySelector("#raised-text") as HTMLSpanElement;
 const goal_text = document.querySelector("#goal-text") as HTMLSpanElement;
 const percent_text = document.querySelector("#percent-text") as HTMLSpanElement;
 
+enum CurrencyDropDecimals {
+    Never,
+    IfWhole,
+    Always
+}
+
 const main = async () => {
     const query = new URLSearchParams(window.location.search);
 
@@ -26,15 +32,15 @@ const main = async () => {
     progress_bar.value = fundraiser.grandTotalRaisedExcludingGiftAid;
     progress_bar.max = fundraiser.fundraisingTarget;
 
-    const as_currency = (amount: number, drop_decimals = false) => {
+    const as_currency = (amount: number, drop_decimals = CurrencyDropDecimals.Never) => {
         const places = drop_decimals ? 0 : 2;
         return `${fundraiser.currencySymbol}${amount.toFixed(places)}`;
     }
 
     const percentage = (fundraiser.grandTotalRaisedExcludingGiftAid / fundraiser.fundraisingTarget) * 100;
 
-    raised_text.innerText = as_currency(fundraiser.grandTotalRaisedExcludingGiftAid, true);
-    goal_text.innerText = as_currency(fundraiser.fundraisingTarget, true);
+    raised_text.innerText = as_currency(fundraiser.grandTotalRaisedExcludingGiftAid, CurrencyDropDecimals.IfWhole);
+    goal_text.innerText = as_currency(fundraiser.fundraisingTarget, CurrencyDropDecimals.IfWhole);
     percent_text.innerText = `${percentage.toFixed(1)}`;
 }
 
