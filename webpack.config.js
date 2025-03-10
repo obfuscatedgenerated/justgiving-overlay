@@ -1,4 +1,5 @@
 const path = require("path");
+const { DefinePlugin } = require("webpack");
 
 module.exports = {
     entry: "./src/index.ts",
@@ -23,5 +24,10 @@ module.exports = {
         static: {
             directory: path.join(__dirname, "/"),
         }
-    }
+    },
+    plugins: [
+        new DefinePlugin({
+            __MODE__: JSON.stringify(process.env.NODE_ENV || "development")
+        })
+    ]
 };
