@@ -29,6 +29,10 @@ I recommend passing `no_charity_details` and `no_avatar` for a compact overlay, 
 
 Note that I haven't tested all combinations of these flags, so some may not work as expected. Feel free to submit a PR.
 
+The colour of the progress bar will use the best colour of your fundraiser's branding, but you can force the colour by passing a hex code in the URL as the `progress_colour` param **WITH NO #**, e.g. `https://ollieg.codes/justgiving-overlay?app_id=YOURID&fundraiser_slug=YOURSLUG&progress_colour=ff0000` will make the progress bar red.
+
+I also haven't tested every size possible.
+
 ## Installation (Local)
 
 1. Get an app ID from JustGiving by registering an app at https://developer.justgiving.com/

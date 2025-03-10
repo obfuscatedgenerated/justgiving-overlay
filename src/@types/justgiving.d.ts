@@ -20,6 +20,12 @@ interface FundraiserDetails {
         absoluteUrl: string;
     }
 
+    branding: {
+        buttonColour: string;
+        buttonTextColour: string;
+        thermometerFillColour: string;
+    }
+
     eventName: string;
 
     currencySymbol: string;

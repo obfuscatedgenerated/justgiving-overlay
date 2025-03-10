@@ -1,3 +1,5 @@
+import Color from "color";
+
 // config from search params
 const params = new URLSearchParams(window.location.search);
 const no_event_name = params.has("no_event_name") || false;
@@ -89,12 +91,14 @@ export const update_charity_details = (charity: CharityDetails) => {
     }
 }
 
-export const update_progress = (raised: number, goal: number) => {
+export const update_progress = (raised: number, goal: number, colour: string) => {
     const progress_bar = $("#progress-bar") as HTMLProgressElement;
 
     const raised_text = $("#raised-text") as HTMLElement;
     const goal_text = $("#goal-text") as HTMLElement;
-    const percent_text = $("#percent-text") as HTMLElement
+    const percent_text = $("#percent-text") as HTMLElement;
+
+    document.documentElement.style.setProperty("--progress-color", colour);
 
     progress_bar.value = raised;
     progress_bar.max = goal;
@@ -104,6 +108,10 @@ export const update_progress = (raised: number, goal: number) => {
     raised_text.innerText = as_currency(raised, CurrencyDropDecimals.IfWhole);
     goal_text.innerText = as_currency(goal, CurrencyDropDecimals.IfWhole);
     percent_text.innerText = `${percentage.toFixed(1)}`;
+
+    if (percentage >= 100) {
+        progress_bar.classList.add("complete");
+    }
 }
 
 export const update_background_image = (url?: string) => {
@@ -147,5 +155,31 @@ export const update_whole_ui = (fundraiser: FundraiserDetails) => {
         charity.remove();
     }
 
-    update_progress(fundraiser.grandTotalRaisedExcludingGiftAid, fundraiser.fundraisingTarget);
+    // prefer url param progress_colour over thermometerFillColour over buttonColour over buttonTextColour over a default white
+    let fundraiser_colour = fundraiser.branding.thermometerFillColour || fundraiser.branding.buttonColour || fundraiser.branding.buttonTextColour || "#fff";
+
+
+    let fundraiser_colour_parse = Color(fundraiser_colour);
+
+    // force saturation of at least 75%
+    if (fundraiser_colour_parse.saturationl() < 0.75) {
+        fundraiser_colour_parse = fundraiser_colour_parse.saturate(0.75);
+    }
+
+    // if fundraiser colour is low luminosity, increase it
+    const fundraiser_colour_luminosity = fundraiser_colour_parse.luminosity();
+    if (fundraiser_colour_luminosity < 0.4) {
+        fundraiser_colour_parse = fundraiser_colour_parse.lighten(0.7 - fundraiser_colour_luminosity);
+    }
+
+    fundraiser_colour = fundraiser_colour_parse.hex();
+
+    // if a progress_colour is set, it overrides the fundraiser colour generated above
+    let progress_colour = params.get("progress_colour") || fundraiser_colour;
+
+    if (!progress_colour.startsWith("#")) {
+        progress_colour = `#${progress_colour}`;
+    }
+
+    update_progress(fundraiser.grandTotalRaisedExcludingGiftAid, fundraiser.fundraisingTarget, progress_colour);
 }
