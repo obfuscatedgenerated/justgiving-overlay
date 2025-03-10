@@ -189,12 +189,12 @@ export const update_whole_ui = (fundraiser: FundraiserDetails) => {
 
     if (no_background) {
         // generate the text colour based on the progress colour
-        const text_colour = progress_colour_parse.darken(0.1).hex();
+        const text_colour = progress_colour_parse.darken(0.2).saturate(0.85);
 
-        document.documentElement.style.setProperty("--text-color", text_colour);
+        document.documentElement.style.setProperty("--text-color", text_colour.hex());
 
         // and the text shadow colour to add a neon effect without being too harsh
-        const text_shadow_colour = progress_colour_parse.darken(0.15).alpha(0.75).hexa();
+        const text_shadow_colour = text_colour.darken(0.5).alpha(0.6).hexa();
         document.documentElement.style.setProperty("--text-shadow-color", text_shadow_colour);
     } else {
         // if there will be background, dont do text color, keep it white and the backdrop filter will make it readable
