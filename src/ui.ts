@@ -125,7 +125,7 @@ export const update_background_image = (url?: string) => {
     }
 
     bg.style.backgroundImage = `url(${url})`;
-    main.style.backdropFilter = "blur(5px) brightness(0.7)";
+    main.style.backdropFilter = "blur(5px) brightness(0.6)";
 }
 
 
@@ -169,7 +169,7 @@ export const update_whole_ui = (fundraiser: FundraiserDetails) => {
     // if fundraiser colour is low luminosity, increase it
     const fundraiser_colour_luminosity = fundraiser_colour_parse.luminosity();
     if (fundraiser_colour_luminosity < 0.4) {
-        fundraiser_colour_parse = fundraiser_colour_parse.lighten(0.7 - fundraiser_colour_luminosity);
+        fundraiser_colour_parse = fundraiser_colour_parse.lighten(0.8 - fundraiser_colour_luminosity);
     }
 
     fundraiser_colour = fundraiser_colour_parse.hex();
@@ -180,6 +180,16 @@ export const update_whole_ui = (fundraiser: FundraiserDetails) => {
     if (!progress_colour.startsWith("#")) {
         progress_colour = `#${progress_colour}`;
     }
+
+    // generate the text colour based on the progress colour
+    const progress_colour_parse = Color(progress_colour);
+    const text_colour = progress_colour_parse.darken(0.1).hex();
+
+    document.documentElement.style.setProperty("--text-color", text_colour);
+
+    // and from there the text shadow colour to add a neon effect without being too harsh
+    const text_shadow_colour = progress_colour_parse.darken(0.15).alpha(0.75).hexa();
+    document.documentElement.style.setProperty("--text-shadow-color", text_shadow_colour);
 
     update_progress(fundraiser.grandTotalRaisedExcludingGiftAid, fundraiser.fundraisingTarget, progress_colour);
 }

@@ -1,5 +1,7 @@
 :root {
     --progress-color: #ff0000;
+    --text-color: #fff;
+    --text-shadow-color: #000;
 }
 
 * {
@@ -35,8 +37,8 @@ main {
     margin: 0;
     padding: 1% 2.5%;
 
-    color: #fff;
-    text-shadow: 0 0 5px rgba(0, 0, 0, 0.75);
+    color: var(--text-color);
+    text-shadow: 0 0 10px var(--text-shadow-color);
 }
 
 #event-details {
@@ -47,7 +49,14 @@ main {
 
     gap: 5%;
 
-    font-weight: bold;
+    font-weight: 800;
+    font-size: 4vw;
+
+    margin-bottom: 1.5%;
+}
+
+#event-name {
+    margin: 0;
 }
 
 #owner-avatar {
@@ -69,7 +78,7 @@ main {
 }
 
 #progress-bar.complete {
-    box-shadow: 0 0 10px var(--progress-color);
+    box-shadow: 0 0 15px var(--progress-color);
 }
 
 #progress-bar::-webkit-progress-bar {
@@ -79,13 +88,17 @@ main {
 
 #progress-bar::-webkit-progress-value {
     background-color: var(--progress-color);
-    border-radius: 10px;
-
     transition: width ease-in 2s;
 }
 
 #progress-text {
     text-align: center;
+
+    margin: 0;
+    margin-top: 1%;
+
+    font-size: 3vw;
+    font-weight: 600;
 }
 
 #charity-details {
@@ -123,8 +136,16 @@ main {
 }
 
 @media screen and (max-width: 500px) {
+    #event-details {
+        font-size: 6vw;
+    }
+
     #charity-logo {
         width: 20%;
         height: 20%;
+    }
+
+    #charity-number {
+        font-size: 5vw;
     }
 }
