@@ -26,10 +26,15 @@ const main = async () => {
     progress_bar.value = fundraiser.grandTotalRaisedExcludingGiftAid;
     progress_bar.max = fundraiser.fundraisingTarget;
 
+    const as_currency = (amount: number, drop_decimals = false) => {
+        const places = drop_decimals ? 0 : 2;
+        return `${fundraiser.currencySymbol}${amount.toFixed(places)}`;
+    }
+
     const percentage = (fundraiser.grandTotalRaisedExcludingGiftAid / fundraiser.fundraisingTarget) * 100;
 
-    raised_text.innerText = `${fundraiser.currencySymbol}${fundraiser.grandTotalRaisedExcludingGiftAid}`;
-    goal_text.innerText = `${fundraiser.currencySymbol}${fundraiser.fundraisingTarget}`;
+    raised_text.innerText = as_currency(fundraiser.grandTotalRaisedExcludingGiftAid, true);
+    goal_text.innerText = as_currency(fundraiser.fundraisingTarget, true);
     percent_text.innerText = `${percentage.toFixed(1)}`;
 }
 
