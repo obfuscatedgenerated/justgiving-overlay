@@ -34,3 +34,7 @@ const main = async () => {
 }
 
 main();
+
+// TODO: refresh on interval
+// TODO: styling
+// TODO: recent donor list
