@@ -29,6 +29,8 @@ I recommend passing `no_charity_details` and `no_avatar` for a compact overlay, 
 
 Note that I haven't tested all combinations of these flags, so some may not work as expected. Feel free to submit a PR.
 
+You can override the background image by passing a URL in the URL as the `bg_url` param, e.g. `https://ollieg.codes/justgiving-overlay?app_id=YOURID&fundraiser_slug=YOURSLUG&bg_url=https://example.com/image.jpg` will use the image at `https://example.com/image.jpg` as the background. Note the `no_background` flag overrules this parameter.
+
 The colour of the progress bar will use the best colour of your fundraiser's branding, but you can force the colour by passing a hex code in the URL as the `progress_colour` param **WITH NO #**, e.g. `https://ollieg.codes/justgiving-overlay?app_id=YOURID&fundraiser_slug=YOURSLUG&progress_colour=ff0000` will make the progress bar red.
 
 I also haven't tested every size possible.

@@ -139,7 +139,7 @@ export const update_whole_ui = (fundraiser: FundraiserDetails) => {
         avatar.remove();
     }
 
-    update_background_image(no_background ? undefined : fundraiser.image.absoluteUrl);
+    update_background_image(no_background ? undefined : params.get("bg_url") || fundraiser.image.absoluteUrl);
 
     if (!no_event_name) {
         update_event_name(fundraiser.eventName || fundraiser.title);
