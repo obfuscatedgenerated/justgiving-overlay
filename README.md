@@ -2,6 +2,8 @@
 
 A simple overlay to use with your favourite streaming software to show the progress of your JustGiving fundraiser.
 
+Note: this is a personal project and is not affiliated with JustGiving.
+
 ## Using the hosted instance
 
 1. Get an app ID from JustGiving by registering an app at https://developer.justgiving.com/
