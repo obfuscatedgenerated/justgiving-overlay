@@ -18,3 +18,4 @@ A simple overlay to use with your favourite streaming software to show the progr
 5. Open your streaming software and add a new browser source with the URL `http://localhost:3000?app_id=YOURID&fundraiser_slug=YOURSLUG`
     replacing `YOURID` with the app ID you got from JustGiving and `YOURSLUG` with the slug of the fundraiser you want to track (e.g. page/MyFundraiser-12345678)
 6. Adjust the width and height of the browser source to fit your stream layout
+7. The server will hot reload to any changes you make to the code (with both `npm start` and `npm dev-server`)
