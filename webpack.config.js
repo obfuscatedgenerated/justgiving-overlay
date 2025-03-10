@@ -1,5 +1,7 @@
 const path = require("path");
 const { DefinePlugin } = require("webpack");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
+const CopyPlugin = require("copy-webpack-plugin");
 
 module.exports = {
     entry: "./src/index.ts",
@@ -10,6 +12,10 @@ module.exports = {
                 use: "ts-loader",
                 exclude: /node_modules/,
             },
+            {
+                test: /\.css$/i,
+                use: ["style-loader", "css-loader"],
+            },
         ],
     },
     resolve: {
@@ -17,15 +23,25 @@ module.exports = {
     },
     output: {
         filename: "bundle.js",
-        path: path.resolve(__dirname, "public"),
+        path: path.resolve(__dirname, "dist"),
+        publicPath: "auto"
     },
     devServer: {
         port: 3000,
         static: {
-            directory: path.join(__dirname, "/"),
-        }
+            directory: path.join(__dirname, "dist"),
+        },
     },
     plugins: [
+        new HtmlWebpackPlugin({
+            template: "./src/index.html",
+            inject: false
+        }),
+        new CopyPlugin({
+            patterns: [
+                { from: "public", to: "public" },
+            ],
+        }),
         new DefinePlugin({
             __MODE__: JSON.stringify(process.env.NODE_ENV || "development")
         })

@@ -1,0 +1,40 @@
+html, body {
+    background-color: transparent;
+
+    font-family: "Open Sans Variable", sans-serif;
+
+    /* using a max-width to limit the size of the overlay and give a more realistic dev preview */
+    max-width: 500px;
+}
+
+main {
+    width: fit-content;
+    height: fit-content;
+    margin: 0;
+}
+
+#event-details {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+
+    gap: 5%;
+
+    font-weight: bold;
+}
+
+#owner-avatar {
+    width: 10%;
+    height: 10%;
+    border-radius: 50%;
+}
+
+
+#progress-bar, #progress-text {
+    width: 100%;
+}
+
+#progress-text {
+    text-align: center;
+}

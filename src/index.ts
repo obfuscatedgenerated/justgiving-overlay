@@ -1,3 +1,6 @@
+import "@fontsource-variable/open-sans";
+import "./index.css";
+
 import {get_fundraiser_details, set_app_id} from "./api";
 import {update_whole_ui} from "./ui";
 

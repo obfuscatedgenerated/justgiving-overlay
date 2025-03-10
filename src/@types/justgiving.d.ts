@@ -16,6 +16,10 @@ interface FundraiserDetails {
         Size150x150Face: string;
     };
 
+    image: {
+        absoluteUrl: string;
+    }
+
     eventName: string;
 
     currencySymbol: string;

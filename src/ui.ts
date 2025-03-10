@@ -73,11 +73,17 @@ export const update_progress = (raised: number, goal: number) => {
     percent_text.innerText = `${percentage.toFixed(1)}`;
 }
 
+export const update_background_image = (url: string) => {
+    const main = $("main") as HTMLDivElement;
+    main.style.backgroundImage = `url(${url})`;
+}
+
 
 export const update_whole_ui = (fundraiser: FundraiserDetails) => {
     set_currency_symbol(fundraiser.currencySymbol);
 
     update_owner_avatar(fundraiser.owner, fundraiser.ownerProfileImageUrls.Size150x150Face);
+    update_background_image(fundraiser.image.absoluteUrl);
 
     update_event_name(fundraiser.eventName);
 
