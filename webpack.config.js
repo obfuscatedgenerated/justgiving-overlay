@@ -16,8 +16,8 @@ module.exports = {
         extensions: [".tsx", ".ts", ".js"],
     },
     output: {
-        filename: "public/bundle.js",
-        path: path.resolve(__dirname, "dist"),
+        filename: "bundle.js",
+        path: path.resolve(__dirname, "public"),
     },
     devServer: {
         port: 3000,
