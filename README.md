@@ -27,6 +27,8 @@ The available flags are:
 
 I recommend passing `no_charity_details` and `no_avatar` for a compact overlay, optionally with `no_background` for a transparent overlay.
 
+If the overlay will be on a particular bright background, it might be a good idea to add a semi-transparent black background behind overlay to make the text more readable.
+
 Note that I haven't tested all combinations of these flags, so some may not work as expected. Feel free to submit a PR.
 
 You can override the background image by passing a URL in the URL as the `bg_url` param, e.g. `https://ollieg.codes/justgiving-overlay?app_id=YOURID&fundraiser_slug=YOURSLUG&bg_url=https://example.com/image.jpg` will use the image at `https://example.com/image.jpg` as the background. Note the `no_background` flag overrules this parameter.
