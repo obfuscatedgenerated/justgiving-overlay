@@ -24,7 +24,7 @@ module.exports = {
     output: {
         filename: "bundle.js",
         path: path.resolve(__dirname, "dist"),
-        publicPath: "auto"
+        publicPath: path.resolve(__dirname, "dist"),
     },
     devServer: {
         port: 3000,
