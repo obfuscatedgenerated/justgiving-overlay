@@ -35,9 +35,19 @@ const loaded = (init_fundraiser: FundraiserDetails) => {
 
     const slug = init_fundraiser.pageShortName;
 
+    let prev_raised = init_fundraiser.grandTotalRaisedExcludingGiftAid;
+
     setInterval(async () => {
         console.log("Refreshing...");
         const fundraiser = await get_fundraiser_details(slug);
+
+        if (fundraiser.grandTotalRaisedExcludingGiftAid < prev_raised) {
+            console.log("Raised amount decreased (cache issue), ignoring...");
+            return;
+        }
+
+        prev_raised = fundraiser.grandTotalRaisedExcludingGiftAid;
+
         update_whole_ui(fundraiser);
 
         // could get just donation details and only update that part of the UI
