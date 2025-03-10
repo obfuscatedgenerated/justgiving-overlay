@@ -10,6 +10,8 @@ interface FundraiserDetails {
 
     charity: CharityDetails;
 
+    pageShortName: string;
+
     owner: string;
     ownerProfileImageUrls: {
         OriginalSize: string;

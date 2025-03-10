@@ -4,6 +4,8 @@ import "./index.css";
 import {get_fundraiser_details, set_app_id} from "./api";
 import {update_whole_ui} from "./ui";
 
+const REFRESH_INTERVAL = 15 * 1000;
+
 const main = async () => {
     const query = new URLSearchParams(window.location.search);
 
@@ -20,18 +22,29 @@ const main = async () => {
 
     // check if document already loaded
     if (document.readyState === "complete") {
-        update_whole_ui(fundraiser);
+        loaded(fundraiser);
         return;
     }
 
     // wait for document to load otherwise
-    document.addEventListener("DOMContentLoaded", () => {
+    document.addEventListener("DOMContentLoaded", () => loaded(fundraiser));
+}
+
+const loaded = (init_fundraiser: FundraiserDetails) => {
+    update_whole_ui(init_fundraiser);
+
+    const slug = init_fundraiser.pageShortName;
+
+    setInterval(async () => {
+        console.log("Refreshing...");
+        const fundraiser = await get_fundraiser_details(slug);
         update_whole_ui(fundraiser);
-    });
+
+        // could get just donation details and only update that part of the UI
+        // could also reuse that to show recent donations in real time
+    }, REFRESH_INTERVAL);
 }
 
 main();
 
-// TODO: refresh on interval
-// TODO: styling
 // TODO: recent donor list
