@@ -1,12 +1,25 @@
+interface CharityDetails {
+    name: string;
+    description: string;
+    registrationNumber: string;
+    logoAbsoluteUrl: string;
+}
+
 interface FundraiserDetails {
     // only partial, for what we need
-    charity: {
-        name: string;
-        description: string;
-        registrationNumber: string;
+
+    charity: CharityDetails;
+
+    owner: string;
+    ownerProfileImageUrls: {
+        OriginalSize: string;
+        Size150x150Face: string;
     };
+
     eventName: string;
+
     currencySymbol: string;
+
     fundraisingTarget: number;
     grandTotalRaisedExcludingGiftAid: number;
 }

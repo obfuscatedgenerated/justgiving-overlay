@@ -1,17 +1,5 @@
 import {get_fundraiser_details, set_app_id} from "./api";
-
-const event_name = document.querySelector("#event-name") as HTMLParagraphElement;
-const progress_bar = document.querySelector("#progress-bar") as HTMLProgressElement;
-
-const raised_text = document.querySelector("#raised-text") as HTMLSpanElement;
-const goal_text = document.querySelector("#goal-text") as HTMLSpanElement;
-const percent_text = document.querySelector("#percent-text") as HTMLSpanElement;
-
-enum CurrencyDropDecimals {
-    Never,
-    IfWhole,
-    Always
-}
+import {update_whole_ui} from "./ui";
 
 const main = async () => {
     const query = new URLSearchParams(window.location.search);
@@ -27,21 +15,16 @@ const main = async () => {
 
     const fundraiser = await get_fundraiser_details(fundraiser_slug!);
 
-    event_name.innerText = fundraiser.eventName;
-
-    progress_bar.value = fundraiser.grandTotalRaisedExcludingGiftAid;
-    progress_bar.max = fundraiser.fundraisingTarget;
-
-    const as_currency = (amount: number, drop_decimals = CurrencyDropDecimals.Never) => {
-        const places = drop_decimals ? 0 : 2;
-        return `${fundraiser.currencySymbol}${amount.toFixed(places)}`;
+    // check if document already loaded
+    if (document.readyState === "complete") {
+        update_whole_ui(fundraiser);
+        return;
     }
 
-    const percentage = (fundraiser.grandTotalRaisedExcludingGiftAid / fundraiser.fundraisingTarget) * 100;
-
-    raised_text.innerText = as_currency(fundraiser.grandTotalRaisedExcludingGiftAid, CurrencyDropDecimals.IfWhole);
-    goal_text.innerText = as_currency(fundraiser.fundraisingTarget, CurrencyDropDecimals.IfWhole);
-    percent_text.innerText = `${percentage.toFixed(1)}`;
+    // wait for document to load otherwise
+    document.addEventListener("DOMContentLoaded", () => {
+        update_whole_ui(fundraiser);
+    });
 }
 
 main();
