@@ -62,8 +62,10 @@ main {
 }
 
 #progress-bar {
-    border-radius: 10px;
+    background-color: #aaa;
     transition: box-shadow 1s;
+
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.33);
 }
 
 #progress-bar.complete {
@@ -79,7 +81,7 @@ main {
     background-color: var(--progress-color);
     border-radius: 10px;
 
-    transition: width ease-in 1s;
+    transition: width ease-in 2s;
 }
 
 #progress-text {
