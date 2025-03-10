@@ -1,5 +1,6 @@
 :root {
     --progress-color: #ff0000;
+    --progress-bg-color: #550000;
     --text-color: #fff;
     --text-shadow-color: #000;
 }
@@ -71,10 +72,10 @@ main {
 }
 
 #progress-bar {
-    background-color: #aaa;
+    background-color: var(--progress-bg-color);
     transition: box-shadow 1s;
 
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.33);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.7);
 }
 
 #progress-bar.complete {
@@ -82,7 +83,7 @@ main {
 }
 
 #progress-bar::-webkit-progress-bar {
-    background-color: #aaa;
+    background-color: var(--progress-bg-color);
     border-radius: 10px;
 }
 

@@ -125,7 +125,7 @@ export const update_background_image = (url?: string) => {
     }
 
     bg.style.backgroundImage = `url(${url})`;
-    main.style.backdropFilter = "blur(5px) brightness(0.6)";
+    main.style.backdropFilter = "blur(5px) brightness(0.7)";
 }
 
 
@@ -181,15 +181,26 @@ export const update_whole_ui = (fundraiser: FundraiserDetails) => {
         progress_colour = `#${progress_colour}`;
     }
 
-    // generate the text colour based on the progress colour
     const progress_colour_parse = Color(progress_colour);
-    const text_colour = progress_colour_parse.darken(0.1).hex();
 
-    document.documentElement.style.setProperty("--text-color", text_colour);
+    // generate the background colour based on the progress colour
+    const bg_colour = progress_colour_parse.darken(0.75).hex();
+    document.documentElement.style.setProperty("--progress-bg-color", bg_colour);
 
-    // and from there the text shadow colour to add a neon effect without being too harsh
-    const text_shadow_colour = progress_colour_parse.darken(0.15).alpha(0.75).hexa();
-    document.documentElement.style.setProperty("--text-shadow-color", text_shadow_colour);
+    if (no_background) {
+        // generate the text colour based on the progress colour
+        const text_colour = progress_colour_parse.darken(0.1).hex();
+
+        document.documentElement.style.setProperty("--text-color", text_colour);
+
+        // and the text shadow colour to add a neon effect without being too harsh
+        const text_shadow_colour = progress_colour_parse.darken(0.15).alpha(0.75).hexa();
+        document.documentElement.style.setProperty("--text-shadow-color", text_shadow_colour);
+    } else {
+        // if there will be background, dont do text color, keep it white and the backdrop filter will make it readable
+        document.documentElement.style.setProperty("--text-color", "#fff");
+        document.documentElement.style.setProperty("--text-shadow-color", "transparent");
+    }
 
     update_progress(fundraiser.grandTotalRaisedExcludingGiftAid, fundraiser.fundraisingTarget, progress_colour);
 }
