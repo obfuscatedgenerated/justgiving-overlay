@@ -4,7 +4,7 @@ A simple overlay to use with your favourite streaming software to show the progr
 
 Note: this is a personal project and is not affiliated with JustGiving.
 
-![demo image](https://github.com/user-attachments/assets/3a864967-85e9-4a89-b5a2-57fe916cde6f)
+[![demo image](https://github.com/user-attachments/assets/3a864967-85e9-4a89-b5a2-57fe916cde6f)](https://ollieg.codes/justgiving-overlay/?app_id=YOURID&fundraiser_slug=page/romesh2025&no_avatar&no_charity_details)
 
 ## Using the hosted instance
 
