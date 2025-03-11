@@ -4,6 +4,8 @@ A simple overlay to use with your favourite streaming software to show the progr
 
 Note: this is a personal project and is not affiliated with JustGiving.
 
+![demo image](https://github.com/user-attachments/assets/3a864967-85e9-4a89-b5a2-57fe916cde6f)
+
 ## Using the hosted instance
 
 1. Get an app ID from JustGiving by registering an app at https://developer.justgiving.com/
