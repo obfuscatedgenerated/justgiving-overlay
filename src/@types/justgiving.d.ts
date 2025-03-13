@@ -36,3 +36,23 @@ interface FundraiserDetails {
     fundraisingTarget: number;
     grandTotalRaisedExcludingGiftAid: number;
 }
+
+interface DonationDetails {
+    // full donation array entry
+
+    amount: number;
+    currencyCode: string;
+    donationDate: Date;
+    donorDisplayName: string;
+    donorLocalAmount: number;
+    donorLocalCurrencyCode: string;
+    donorRealName: string;
+    estimatedTaxReclaim: number;
+    id: number;
+    image: string;
+    message: string;
+    source: string;
+    status: string;
+    thirdPartyReference: string;
+    charityId: number;
+}

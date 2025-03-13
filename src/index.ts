@@ -31,8 +31,8 @@ const main = async () => {
     document.addEventListener("DOMContentLoaded", () => loaded(fundraiser));
 }
 
-const loaded = (init_fundraiser: FundraiserDetails) => {
-    update_whole_ui(init_fundraiser);
+const loaded = async (init_fundraiser: FundraiserDetails) => {
+    await update_whole_ui(init_fundraiser);
 
     const slug = init_fundraiser.pageShortName;
 

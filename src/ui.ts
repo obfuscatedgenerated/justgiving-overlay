@@ -1,4 +1,5 @@
 import Color from "color";
+import {get_donations} from "./api";
 
 // config from search params
 const params = new URLSearchParams(window.location.search);
@@ -11,6 +12,7 @@ const no_charity_details = params.has("no_charity_details") || false;
 const no_background = params.has("no_background") || false;
 const no_avatar = params.has("no_avatar") || false;
 
+const widget = params.get("widget") || "progress";
 
 // a little convenience function to give a shorter, cacheable way to get elements to reduce searching the DOM
 const elements_cache: { [selector: string]: Element | null } = {};
@@ -114,6 +116,31 @@ export const update_progress = (raised: number, goal: number, colour: string) =>
     }
 }
 
+export const update_donations = (donations: DonationDetails[]) => {
+    // donations should only be latest page so should be only latest 25
+    const donation_list = $("#donation-list") as HTMLElement;
+
+    donation_list.innerHTML = "";
+
+    for (let donation of donations) {
+        const donation_item = document.createElement("li");
+        donation_item.classList.add("donation");
+
+        const donor_name = document.createElement("span");
+        donor_name.classList.add("donor-name");
+        donor_name.innerText = donation.donorDisplayName;
+
+        const donation_amount = document.createElement("span");
+        donation_amount.classList.add("donation-amount");
+        donation_amount.innerText = as_currency(donation.amount);
+
+        donation_item.appendChild(donor_name);
+        donation_item.appendChild(donation_amount);
+
+        donation_list.appendChild(donation_item);
+    }
+}
+
 export const update_background_image = (url?: string) => {
     const bg = $("#bg-container") as HTMLElement;
     const main = $("main") as HTMLElement;
@@ -129,7 +156,7 @@ export const update_background_image = (url?: string) => {
 }
 
 
-export const update_whole_ui = (fundraiser: FundraiserDetails) => {
+export const update_whole_ui = async (fundraiser: FundraiserDetails) => {
     set_currency_symbol(fundraiser.currencySymbol);
 
     if (!no_avatar) {
@@ -202,5 +229,22 @@ export const update_whole_ui = (fundraiser: FundraiserDetails) => {
         document.documentElement.style.setProperty("--text-shadow-color", "transparent");
     }
 
-    update_progress(fundraiser.grandTotalRaisedExcludingGiftAid, fundraiser.fundraisingTarget, progress_colour);
+    const progress_details = $("#progress-details") as HTMLElement;
+    const donation_details = $("#donation-details") as HTMLElement;
+
+    switch (widget.toLowerCase()) {
+        case "progress":
+            donation_details.remove();
+            update_progress(fundraiser.grandTotalRaisedExcludingGiftAid, fundraiser.fundraisingTarget, progress_colour);
+            break;
+        case "donations":
+            progress_details.remove();
+            const donations = await get_donations(fundraiser.pageShortName);
+            update_donations(donations);
+            break;
+        default:
+            console.error(`Unknown widget type: ${widget}`);
+            break;
+    }
+
 }
