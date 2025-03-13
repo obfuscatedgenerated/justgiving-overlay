@@ -228,7 +228,7 @@ export const update_whole_ui = async (fundraiser: FundraiserDetails) => {
     const bg_colour = progress_colour_parse.darken(0.75).hex();
     document.documentElement.style.setProperty("--progress-bg-color", bg_colour);
 
-    if (no_background || widget === "donations") {
+    if (widget === "progress" && no_background) {
         // generate the text colour based on the progress colour
         const text_colour = progress_colour_parse.darken(0.2).saturate(0.85);
 
