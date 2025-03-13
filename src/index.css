@@ -175,7 +175,7 @@ main {
 
     width: 100%;
 
-    font-size: 1.5rem;
+    font-size: 3rem;
     font-weight: bold;
 }
 
@@ -189,7 +189,7 @@ main {
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
 
-    font-size: 1rem;
+    font-size: 2rem;
 
     margin: 0.5rem;
 }
