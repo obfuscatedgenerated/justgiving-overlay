@@ -39,6 +39,10 @@ The colour of the progress bar will use the best colour of your fundraiser's bra
 
 I also haven't tested every size possible.
 
+NEW! You can pass a `widget` parameter. The default is `progress` but you can also use `donations` to show the most recent donations made and their messages.
+
+The donation widget fits the full frame so you can use any size you like.
+
 ## Installation (Local)
 
 1. Get an app ID from JustGiving by registering an app at https://developer.justgiving.com/
