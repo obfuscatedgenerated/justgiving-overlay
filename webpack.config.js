@@ -3,6 +3,9 @@ const { DefinePlugin } = require("webpack");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const CopyPlugin = require("copy-webpack-plugin");
 
+// detect if server is running or this is a build
+const is_server = process.env.WEBPACK_SERVE === "true";
+
 module.exports = {
     entry: "./src/index.ts",
     module: {
@@ -24,8 +27,8 @@ module.exports = {
     output: {
         filename: "bundle.js",
         path: path.resolve(__dirname, "dist"),
-        //publicPath: "https://ollieg.codes/justgiving-overlay/"
-        publicPath: path.resolve(__dirname, "dist")
+        publicPath: is_server ? path.resolve(__dirname, "dist") : "https://ollieg.codes/justgiving-overlay/"
+
     },
     devServer: {
         port: 3000,
