@@ -32,6 +32,13 @@ const main = async () => {
 }
 
 const loaded = async (init_fundraiser: FundraiserDetails) => {
+    // delete privacy policy overlay (ollieg.codes)
+    const overlay = document.querySelector(".zaraz-privacy");
+
+    if (overlay) {
+        overlay.remove();
+    }
+
     await update_whole_ui(init_fundraiser);
 
     const slug = init_fundraiser.pageShortName;

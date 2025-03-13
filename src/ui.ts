@@ -238,6 +238,7 @@ export const update_whole_ui = async (fundraiser: FundraiserDetails) => {
         const text_shadow_colour = text_colour.darken(0.5).alpha(0.6).hexa();
         document.documentElement.style.setProperty("--text-shadow-color", text_shadow_colour);
     } else {
+        console.log("No background or using donations widget, keeping text white");
         // if there will be background or using donations widget, dont do text color, keep it white and the backdrop filter will make it readable
         document.documentElement.style.setProperty("--text-color", "#fff");
         document.documentElement.style.setProperty("--text-shadow-color", "transparent");
