@@ -24,7 +24,8 @@ module.exports = {
     output: {
         filename: "bundle.js",
         path: path.resolve(__dirname, "dist"),
-        publicPath: "https://ollieg.codes/justgiving-overlay/"
+        //publicPath: "https://ollieg.codes/justgiving-overlay/"
+        publicPath: path.resolve(__dirname, "dist")
     },
     devServer: {
         port: 3000,

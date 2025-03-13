@@ -117,6 +117,8 @@ export const update_progress = (raised: number, goal: number, colour: string) =>
 }
 
 export const update_donations = (donations: DonationDetails[]) => {
+    // could be faster to only get new donos?
+
     // donations should only be latest page so should be only latest 25
     const donation_list = $("#donation-list") as HTMLElement;
 
@@ -134,8 +136,18 @@ export const update_donations = (donations: DonationDetails[]) => {
         donation_amount.classList.add("donation-amount");
         donation_amount.innerText = as_currency(donation.amount);
 
+        const donation_date = document.createElement("span");
+        donation_date.classList.add("donation-date");
+        donation_date.innerText = donation.donationDate.toLocaleDateString();
+
+        const donation_message = document.createElement("pre");
+        donation_message.classList.add("donation-message");
+        donation_message.innerText = donation.message;
+
         donation_item.appendChild(donor_name);
         donation_item.appendChild(donation_amount);
+        donation_item.appendChild(donation_date);
+        donation_item.appendChild(donation_message);
 
         donation_list.appendChild(donation_item);
     }
