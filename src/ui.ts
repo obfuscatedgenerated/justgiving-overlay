@@ -228,7 +228,7 @@ export const update_whole_ui = async (fundraiser: FundraiserDetails) => {
     const bg_colour = progress_colour_parse.darken(0.75).hex();
     document.documentElement.style.setProperty("--progress-bg-color", bg_colour);
 
-    if (no_background) {
+    if (no_background || widget === "donations") {
         // generate the text colour based on the progress colour
         const text_colour = progress_colour_parse.darken(0.2).saturate(0.85);
 
@@ -238,7 +238,7 @@ export const update_whole_ui = async (fundraiser: FundraiserDetails) => {
         const text_shadow_colour = text_colour.darken(0.5).alpha(0.6).hexa();
         document.documentElement.style.setProperty("--text-shadow-color", text_shadow_colour);
     } else {
-        // if there will be background, dont do text color, keep it white and the backdrop filter will make it readable
+        // if there will be background or using donations widget, dont do text color, keep it white and the backdrop filter will make it readable
         document.documentElement.style.setProperty("--text-color", "#fff");
         document.documentElement.style.setProperty("--text-shadow-color", "transparent");
     }
