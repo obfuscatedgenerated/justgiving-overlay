@@ -245,6 +245,7 @@ export const update_whole_ui = async (fundraiser: FundraiserDetails) => {
 
     const progress_details = $("#progress-details") as HTMLElement;
     const donation_details = $("#donation-details") as HTMLElement;
+    const main = $("main") as HTMLElement;
 
     switch (widget.toLowerCase()) {
         case "progress":
@@ -253,6 +254,11 @@ export const update_whole_ui = async (fundraiser: FundraiserDetails) => {
             break;
         case "donations":
             progress_details.remove();
+
+            // make body background fit screen
+            main.style.height = "100vh";
+            main.style.width = "100vw";
+
             const donations = await get_donations(fundraiser.pageShortName);
             update_donations(donations);
             break;
