@@ -177,7 +177,7 @@ export const update_background_image = (url?: string) => {
 }
 
 
-export const update_whole_ui = async (fundraiser: FundraiserDetails) => {
+export const update_whole_ui = async (fundraiser: FundraiserDetails, donations?: DonationDetails[]) => {
     set_currency_symbol(fundraiser.currencySymbol);
 
     if (!no_avatar) {
@@ -270,7 +270,11 @@ export const update_whole_ui = async (fundraiser: FundraiserDetails) => {
             // remove padding from main
             main.style.padding = "0";
 
-            const donations = await get_donations(fundraiser.pageShortName);
+            if (!donations) {
+                // if we didn't get passed donations, fetch them
+                donations = await get_donations(fundraiser.pageShortName);
+            }
+
             update_donations(donations);
             break;
         default:

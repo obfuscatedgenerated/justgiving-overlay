@@ -22,6 +22,7 @@
   "homepage": "https://github.com/obfuscatedgenerated/justgiving-overlay#readme",
   "description": "",
   "devDependencies": {
+    "@types/howler": "^2.2.12",
     "copy-webpack-plugin": "^13.0.0",
     "css-loader": "^7.1.2",
     "gh-pages": "^6.3.0",
@@ -35,6 +36,7 @@
   },
   "dependencies": {
     "@fontsource-variable/open-sans": "^5.2.5",
-    "color": "^5.0.0"
+    "color": "^5.0.0",
+    "howler": "^2.2.4"
   }
 }
