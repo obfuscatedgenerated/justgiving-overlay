@@ -137,7 +137,7 @@ main {
 }
 
 #donation-details {
-    margin: 2%;
+    margin: 0;
 }
 
 #donation-list {
@@ -177,6 +177,23 @@ main {
 
     font-size: 3rem;
     font-weight: bold;
+
+    max-width: 100%;
+
+    gap: 0.1rem;
+}
+
+.donor-name {
+    /* make it so the name truncates if it will overlap with the amount */
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.donation-amount {
+    white-space: nowrap;
 }
 
 .donation-message {

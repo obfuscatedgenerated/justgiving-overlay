@@ -152,6 +152,13 @@ export const update_donations = (donations: DonationDetails[]) => {
         }
 
         donation_list.appendChild(donation_item);
+
+        // check if the donation list is breaking out the window
+        if (donation_list.scrollHeight > window.innerHeight) {
+            // only showing whole boxes, remove last one and break out of loop
+            donation_item.remove();
+            break;
+        }
     }
 }
 
@@ -259,6 +266,9 @@ export const update_whole_ui = async (fundraiser: FundraiserDetails) => {
             // make body background fit screen
             main.style.height = "100vh";
             main.style.width = "100vw";
+
+            // remove padding from main
+            main.style.padding = "0";
 
             const donations = await get_donations(fundraiser.pageShortName);
             update_donations(donations);
