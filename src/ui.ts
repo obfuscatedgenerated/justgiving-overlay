@@ -128,26 +128,28 @@ export const update_donations = (donations: DonationDetails[]) => {
         const donation_item = document.createElement("li");
         donation_item.classList.add("donation");
 
+        const donation_top = document.createElement("div");
+        donation_top.classList.add("donation-top");
+
         const donor_name = document.createElement("span");
         donor_name.classList.add("donor-name");
         donor_name.innerText = donation.donorDisplayName;
+        donation_top.appendChild(donor_name);
 
         const donation_amount = document.createElement("span");
         donation_amount.classList.add("donation-amount");
         donation_amount.innerText = as_currency(donation.amount);
+        donation_top.appendChild(donation_amount);
 
-        const donation_date = document.createElement("span");
-        donation_date.classList.add("donation-date");
-        donation_date.innerText = donation.donationDate.toLocaleDateString();
+        donation_item.appendChild(donation_top);
 
-        const donation_message = document.createElement("pre");
-        donation_message.classList.add("donation-message");
-        donation_message.innerText = donation.message;
+        if (donation.message) {
+            const donation_message = document.createElement("p");
+            donation_message.classList.add("donation-message");
+            donation_message.innerText = donation.message;
 
-        donation_item.appendChild(donor_name);
-        donation_item.appendChild(donation_amount);
-        donation_item.appendChild(donation_date);
-        donation_item.appendChild(donation_message);
+            donation_item.appendChild(donation_message);
+        }
 
         donation_list.appendChild(donation_item);
     }
