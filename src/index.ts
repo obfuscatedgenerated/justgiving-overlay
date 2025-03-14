@@ -9,7 +9,6 @@ const REFRESH_INTERVAL = 15 * 1000;
 
 let use_sfx = false;
 let use_tts = false;
-let last_donation_id: number | null = null;
 
 const main = async () => {
     const query = new URLSearchParams(window.location.search);
@@ -48,12 +47,11 @@ const loaded = async (init_fundraiser: FundraiserDetails) => {
     }
 
     if (use_sfx || use_tts) {
-        // get the newest donation id so we don't play through all the old ones
         const donations = await get_donations(init_fundraiser.pageShortName);
 
         if (donations.length > 0) {
-            last_donation_id = donations[0].id;
-            console.log("Last donation id:", last_donation_id);
+            // add all initial donations to the seen ids as we dont want to play old ones on refresh
+            seen_ids.push(...donations.map(d => d.id));
         }
     }
 
@@ -91,18 +89,21 @@ const loaded = async (init_fundraiser: FundraiserDetails) => {
 let sfx_queue: DonationDetails[] = [];
 let queue_playing = false;
 
+let seen_ids: number[] = [];
+
 const enqueue_all_sfx = async (donations: DonationDetails[]) => {
     // plays all sfx for any new donations recieved in order
 
     const actual_donations: DonationDetails[] = [];
 
     for (const donation of donations) {
-        // if we've seen this donation before, anything past this is old
-        if (donation.id === last_donation_id) {
-            break;
+        // if we've seen this donation before, skip
+        // i was trying to be clever by only storing the "newest" id, but the constant reversing of order made it incredibly confusing and broken
+        if (seen_ids.includes(donation.id)) {
+            continue;
         }
 
-        last_donation_id = donation.id;
+        seen_ids.push(donation.id);
         actual_donations.push(donation);
     }
 
@@ -111,10 +112,9 @@ const enqueue_all_sfx = async (donations: DonationDetails[]) => {
 
     // add to queue
     sfx_queue.push(...actual_donations);
-    console.log("Queue:", sfx_queue);
 
     // if not already playing, start playing
-    if (!queue_playing) {
+    if (sfx_queue.length > 0 && !queue_playing) {
         console.log("Starting queue...");
         queue_playing = true;
         sfx_dequeuer(sfx_queue[0]);
