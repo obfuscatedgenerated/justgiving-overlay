@@ -15,7 +15,7 @@ Note: this is a personal project and is not affiliated with JustGiving.
 
 ## Customising
 
-## Removal flags
+### Removal flags
 
 You can remove certain elements by passing flags in the URL, e.g. `https://ollieg.codes/justgiving-overlay?app_id=YOURID&fundraiser_slug=YOURSLUG&no_charity_details` will hide the charity details.
 
@@ -37,25 +37,25 @@ Note that I haven't tested all combinations of these flags, so some may not work
 
 I also haven't tested every window size possible.
 
-## Background image overrude and progress bar colour
+### Background image overrude and progress bar colour
 
 You can override the background image by passing a URL in the URL as the `bg_url` param, e.g. `https://ollieg.codes/justgiving-overlay?app_id=YOURID&fundraiser_slug=YOURSLUG&bg_url=https://example.com/image.jpg` will use the image at `https://example.com/image.jpg` as the background. Note the `no_background` flag overrules this parameter.
 
 The colour of the progress bar will use the best colour of your fundraiser's branding, but you can force the colour by passing a hex code in the URL as the `progress_colour` param **WITH NO #**, e.g. `https://ollieg.codes/justgiving-overlay?app_id=YOURID&fundraiser_slug=YOURSLUG&progress_colour=ff0000` will make the progress bar red.
 
-## NEW! Widget parameter
+### NEW! Widget parameter
 
 You can pass a `widget` parameter. The default is `progress` but you can also use `donations` to show the most recent donations made and their messages.
 
 The donation widget fits the full frame so you can use any size you like. I recommend using less width than height. Make sure you set this on the properties and not crop the element to ensure the culling of donation boxes works properly.
 
-## NEW! TTS
+### NEW! TTS
 
 You can add the `tts` flag to enable TTS reading of donation messages!
 
 Note: if you are using multiple instances of the overlay, only one should have TTS enabled to prevent overlapping speech.
 
-## NEW! Sound effects
+### NEW! Sound effects
 
 You can pass sound effects, with the parameters `sfx_n=url` where n is the pre-decimal value which if a donation exceeds it, the sound at url will play. Only the highest value n will play a sound
 
