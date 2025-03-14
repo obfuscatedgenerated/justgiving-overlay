@@ -124,6 +124,7 @@ const sfx_dequeuer = async (donation: DonationDetails) => {
     await play_sfx(donation.amount);
 
     if (donation.message) {
+        // TODO: optional minimum price for TTS
         await play_tts(donation.message);
     }
 
