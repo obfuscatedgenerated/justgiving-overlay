@@ -40,7 +40,7 @@ interface FundraiserDetails {
 interface DonationDetails {
     // full donation array entry
 
-    amount: number;
+    amount: number | null; // null if donation amount hidden
     currencyCode: string;
     donationDate: Date;
     donorDisplayName: string;

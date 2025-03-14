@@ -138,7 +138,13 @@ export const update_donations = (donations: DonationDetails[]) => {
 
         const donation_amount = document.createElement("span");
         donation_amount.classList.add("donation-amount");
-        donation_amount.innerText = as_currency(donation.amount);
+
+        if (donation.amount) {
+            donation_amount.innerText = as_currency(donation.amount);
+        } else {
+            donation_amount.innerHTML = "<i>(hidden)</i>";
+        }
+
         donation_top.appendChild(donation_amount);
 
         donation_item.appendChild(donation_top);

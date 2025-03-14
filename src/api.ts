@@ -46,7 +46,10 @@ export const get_donations = async (fundraiser_slug: string): Promise<DonationDe
 
     // for each donation, cast numerical types to numbers, and parse out date
     for (let donation of donations) {
-        donation.amount = parseFloat(donation.amount);
+        if (donation.amount !== null) {
+            donation.amount = parseFloat(donation.amount);
+        }
+
         donation.donorLocalAmount = parseFloat(donation.donorLocalAmount);
         donation.estimatedTaxReclaim = parseFloat(donation.estimatedTaxReclaim);
 

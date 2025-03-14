@@ -124,7 +124,7 @@ const enqueue_all_sfx = async (donations: DonationDetails[]) => {
 const sfx_dequeuer = async (donation: DonationDetails) => {
     console.log("Playing sfx for donation:", donation);
 
-    if (use_sfx) {
+    if (use_sfx && donation.amount) {
         await play_sfx(donation.amount);
     }
 
