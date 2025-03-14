@@ -1,4 +1,5 @@
 import {Howl} from "howler";
+import {tts_url} from "./api";
 
 // in the url parameters, we have sfx_n=url where n is the pre-decimal value which if a donation exceeds it, the sound at url will play
 // only the highest value n will play a sound
@@ -39,6 +40,13 @@ export const play_sfx = (amount: number) => {
                 const sfx = sfx_bank.get(key);
 
                 if (sfx) {
+                    // check if sound load failed
+                    if (sfx.state() === "unloaded") {
+                        console.error("Sound failed to load for sfx_" + key);
+                        resolve();
+                        return;
+                    }
+
                     sfx.once("end", () => resolve());
                     sfx.play();
                     return;
@@ -47,5 +55,20 @@ export const play_sfx = (amount: number) => {
         }
 
         resolve();
+    });
+}
+
+export const play_tts = async (text: string) => {
+    return new Promise<void>((resolve) => {
+        const url = tts_url(text);
+
+        // will be streamed
+        const sound = new Howl({
+            src: [url],
+            html5: true
+        });
+
+        sound.once("end", () => resolve());
+        sound.play();
     });
 }

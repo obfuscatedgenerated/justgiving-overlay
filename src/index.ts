@@ -3,7 +3,7 @@ import "./index.css";
 
 import {get_donations, get_fundraiser_details, set_app_id} from "./api";
 import {update_whole_ui} from "./ui";
-import {load_sfx_bank, play_sfx} from "./sfx";
+import {load_sfx_bank, play_sfx, play_tts} from "./sfx";
 
 const REFRESH_INTERVAL = 15 * 1000;
 
@@ -16,7 +16,7 @@ const main = async () => {
     const app_id = query.get("app_id");
     const fundraiser_slug = query.get("fundraiser_slug");
 
-    use_sfx = load_sfx_bank().length > 0;
+    use_sfx = (load_sfx_bank().length > 0) || query.has("tts");
 
     if (!app_id || !fundraiser_slug) {
         document.body.innerText = `Missing url parameters: ${app_id ? "" : "app_id"} ${fundraiser_slug ? "" : "fundraiser_slug"}`;
@@ -47,7 +47,7 @@ const loaded = async (init_fundraiser: FundraiserDetails) => {
 
     if (use_sfx) {
         // get the newest donation id so we don't play through all the old ones
-         const donations = await get_donations(init_fundraiser.pageShortName);
+        const donations = await get_donations(init_fundraiser.pageShortName);
 
         if (donations.length > 0) {
             last_donation_id = donations[0].id;
@@ -74,7 +74,7 @@ const loaded = async (init_fundraiser: FundraiserDetails) => {
         let donation_details: DonationDetails[] | undefined;
         if (use_sfx) {
             donation_details = await get_donations(slug);
-            play_all_sfx(donation_details);
+            enqueue_all_sfx(donation_details);
         }
 
         prev_raised = fundraiser.grandTotalRaisedExcludingGiftAid;
@@ -86,10 +86,13 @@ const loaded = async (init_fundraiser: FundraiserDetails) => {
     }, REFRESH_INTERVAL);
 }
 
-const play_all_sfx = async (donations: DonationDetails[]) => {
+let sfx_queue: DonationDetails[] = [];
+let queue_playing = false;
+
+const enqueue_all_sfx = async (donations: DonationDetails[]) => {
     // plays all sfx for any new donations recieved in order
 
-    const values: number[] = [];
+    const actual_donations: DonationDetails[] = [];
 
     for (const donation of donations) {
         // if we've seen this donation before, anything past this is old
@@ -98,16 +101,41 @@ const play_all_sfx = async (donations: DonationDetails[]) => {
         }
 
         last_donation_id = donation.id;
-        values.push(donation.amount);
+        actual_donations.push(donation);
     }
 
     // reverse so we play the oldest donation first
-    values.reverse();
+    actual_donations.reverse();
 
-    console.log("Playing sfx for:", values);
+    // add to queue
+    sfx_queue.push(...actual_donations);
+    console.log("Queue:", sfx_queue);
 
-    for (const value of values) {
-        await play_sfx(value);
+    // if not already playing, start playing
+    if (!queue_playing) {
+        console.log("Starting queue...");
+        queue_playing = true;
+        sfx_dequeuer(sfx_queue[0]);
+    }
+}
+
+const sfx_dequeuer = async (donation: DonationDetails) => {
+    console.log("Playing sfx for donation:", donation);
+    await play_sfx(donation.amount);
+
+    if (donation.message) {
+        await play_tts(donation.message);
+    }
+
+    // remove from queue
+    sfx_queue.shift();
+
+    // recursively call to play next sfx in queue
+    if (sfx_queue.length > 0) {
+        sfx_dequeuer(sfx_queue[0]);
+    } else {
+        queue_playing = false;
+        console.log("Queue finished");
     }
 }
 

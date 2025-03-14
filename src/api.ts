@@ -60,3 +60,10 @@ export const get_donations = async (fundraiser_slug: string): Promise<DonationDe
 
     return donations;
 }
+
+
+
+const TTS_BASE = "https://api.streamelements.com/kappa/v2/speech?voice=Brian&text=";
+export const tts_url = (text: string) => {
+    return TTS_BASE + encodeURIComponent(text);
+}

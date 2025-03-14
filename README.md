@@ -49,6 +49,12 @@ You can pass a `widget` parameter. The default is `progress` but you can also us
 
 The donation widget fits the full frame so you can use any size you like. I recommend using less width than height. Make sure you set this on the properties and not crop the element to ensure the culling of donation boxes works properly.
 
+## NEW! TTS
+
+You can add the `tts` flag to enable TTS reading of donation messages!
+
+Note: if you are using multiple instances of the overlay, only one should have TTS enabled to prevent overlapping speech.
+
 ## NEW! Sound effects
 
 You can pass sound effects, with the parameters `sfx_n=url` where n is the pre-decimal value which if a donation exceeds it, the sound at url will play. Only the highest value n will play a sound
@@ -67,6 +73,8 @@ e.g.
 £5 donation will play sound2.mp3
 
 £100 donation will play sound3.mp3
+
+Note: if you are using multiple instances of the overlay, only one should have sound effects defined to prevent overlapping sounds.
 
 ## Installation (Local)
 
