@@ -8,6 +8,7 @@ import {load_sfx_bank, play_sfx, play_tts} from "./sfx";
 const REFRESH_INTERVAL = 15 * 1000;
 
 let use_sfx = false;
+let use_tts = false;
 let last_donation_id: number | null = null;
 
 const main = async () => {
@@ -16,7 +17,8 @@ const main = async () => {
     const app_id = query.get("app_id");
     const fundraiser_slug = query.get("fundraiser_slug");
 
-    use_sfx = (load_sfx_bank().length > 0) || query.has("tts");
+    use_sfx = (load_sfx_bank().length > 0);
+    use_tts = query.has("tts") || false;
 
     if (!app_id || !fundraiser_slug) {
         document.body.innerText = `Missing url parameters: ${app_id ? "" : "app_id"} ${fundraiser_slug ? "" : "fundraiser_slug"}`;
@@ -45,7 +47,7 @@ const loaded = async (init_fundraiser: FundraiserDetails) => {
         overlay.remove();
     }
 
-    if (use_sfx) {
+    if (use_sfx || use_tts) {
         // get the newest donation id so we don't play through all the old ones
         const donations = await get_donations(init_fundraiser.pageShortName);
 
@@ -72,7 +74,7 @@ const loaded = async (init_fundraiser: FundraiserDetails) => {
 
         // save dono details to pass to ui function conditionally, so we don't have to fetch it again if showing donations
         let donation_details: DonationDetails[] | undefined;
-        if (use_sfx) {
+        if (use_sfx || use_tts) {
             donation_details = await get_donations(slug);
             enqueue_all_sfx(donation_details);
         }
@@ -121,9 +123,12 @@ const enqueue_all_sfx = async (donations: DonationDetails[]) => {
 
 const sfx_dequeuer = async (donation: DonationDetails) => {
     console.log("Playing sfx for donation:", donation);
-    await play_sfx(donation.amount);
 
-    if (donation.message) {
+    if (use_sfx) {
+        await play_sfx(donation.amount);
+    }
+
+    if (use_tts && donation.message) {
         // TODO: optional minimum price for TTS
         await play_tts(donation.message);
     }
