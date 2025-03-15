@@ -49,6 +49,8 @@ You can pass a `widget` parameter. The default is `progress` but you can also us
 
 The donation widget fits the full frame so you can use any size you like. I recommend using less width than height. Make sure you set this on the properties and not crop the element to ensure the culling of donation boxes works properly.
 
+Recommended flags: `&widget=donations&no_charity_details&no_event_name&no_avatar&no_background`
+
 ### NEW! TTS
 
 You can add the `tts` flag to enable TTS reading of donation messages!
