@@ -182,6 +182,7 @@ export const update_background_image = (url?: string) => {
     main.style.backdropFilter = "blur(5px) brightness(0.7)";
 }
 
+let newest_donation_date: Date | null = null;
 
 export const update_whole_ui = async (fundraiser: FundraiserDetails, donations?: DonationDetails[]) => {
     set_currency_symbol(fundraiser.currencySymbol);
@@ -281,6 +282,16 @@ export const update_whole_ui = async (fundraiser: FundraiserDetails, donations?:
                 donations = await get_donations(fundraiser.pageShortName);
             }
 
+            // make sure that there are new donations
+            // sometimes the api returns new donations, then the next call will be cached and not return new ones, its a weird bug
+            // TODO: unite this with seen_ids in index.ts, could make it part of api.ts
+            let latest_date_of_donations = donations[0].donationDate;
+            if (newest_donation_date && latest_date_of_donations <= newest_donation_date) {
+                console.log("No new donations (prevent cache issue), ignoring...");
+                return;
+            }
+
+            newest_donation_date = latest_date_of_donations;
             update_donations(donations);
             break;
         default:
