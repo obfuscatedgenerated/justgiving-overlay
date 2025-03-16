@@ -51,6 +51,9 @@ The donation widget fits the full frame so you can use any size you like. I reco
 
 Recommended flags: `&widget=donations&no_charity_details&no_event_name&no_avatar&no_background`
 
+![image](https://github.com/user-attachments/assets/f95fe635-5e70-44df-9d29-4a2ad6b73e05)
+
+
 ### NEW! TTS
 
 You can add the `tts` flag to enable TTS reading of donation messages!
