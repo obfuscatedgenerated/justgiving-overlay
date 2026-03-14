@@ -37,7 +37,7 @@ Note that I haven't tested all combinations of these flags, so some may not work
 
 I also haven't tested every window size possible.
 
-### Background image overrude and progress bar colour
+### Background image override and progress bar colour
 
 You can override the background image by passing a URL in the URL as the `bg_url` param, e.g. `https://ollieg.codes/justgiving-overlay?app_id=YOURID&fundraiser_slug=YOURSLUG&bg_url=https://example.com/image.jpg` will use the image at `https://example.com/image.jpg` as the background. Note the `no_background` flag overrules this parameter.
 
